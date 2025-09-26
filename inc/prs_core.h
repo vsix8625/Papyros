@@ -1,0 +1,50 @@
+#pragma GCC system_header
+#ifndef PRS_CORE_H
+#define PRS_CORE_H
+
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
+
+typedef struct PRS_ConfigEntry PRS_ConfigEntry;
+
+typedef enum
+{
+    TYPE_UNKNOWN,
+    TYPE_INT,
+    TYPE_FLOAT,
+    TYPE_BOOL,
+    TYPE_STR,
+    TYPE_LIST,
+    TYPE_OBJECT,
+} PRS_ValueType;
+
+typedef struct PRS_ConfigValue
+{
+    PRS_ValueType type;
+    int32_t int_val;
+    float float_val;
+    bool bool_val;
+    char *string_val;
+    struct
+    {
+        size_t count;
+        struct PRS_ConfigValue *items;
+    } list_val;
+    struct
+    {
+        size_t count;
+        PRS_ConfigEntry *entries;
+    } object_val;
+} PRS_ConfigValue;
+
+typedef struct PRS_ConfigEntry
+{
+    char *key;
+    PRS_ConfigValue value;
+} PRS_ConfigEntry;
+
+bool PRS_ParseValue(const char *text, PRS_ValueType explicit_type, PRS_ConfigValue *out);
+void PRS_DestroyConfigValues(PRS_ConfigValue *val);
+
+#endif  // PRS_CORE_H

@@ -16,6 +16,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(LIB_NAME Papyros)
+string(TOLOWER "${LIB_NAME}" LIB_NAME_LOWER)
 
 # Source file caching
 set(SRC_FILES_CACHE "${CMAKE_BINARY_DIR}/src_files.cache")
@@ -25,10 +26,6 @@ if(EXISTS ${SRC_FILES_CACHE})
 else()
     file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS
         src/*.c
-        src/core/*.c
-        src/platform/*.c
-        src/graphics/*.c
-        src/input/*.c
         external/*.c
     )
     file(WRITE ${SRC_FILES_CACHE} "${SRC_FILES}")
@@ -69,12 +66,13 @@ endif()
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" BUILD_TYPE_LOWER)
 set(OUTPUT_LIB_DIR "${CMAKE_BINARY_DIR}/lib/${BUILD_TYPE_LOWER}")
-set_target_properties(${LIB_NAME}_static PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_LIB_DIR}
-)
-set_target_properties(${LIB_NAME}_shared PROPERTIES
-    LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_LIB_DIR}
-)
+foreach(TARGET ${LIB_NAME}_static ${LIB_NAME}_shared)
+    set_target_properties(${TARGET} PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_LIB_DIR}
+        LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_LIB_DIR}
+        OUTPUT_NAME ${LIB_NAME_LOWER}
+    )
+endforeach()
 
 # Write the library paths to .pounce/data/library_path.pounce
 set(LIBRARY_PATH_FILE "${CMAKE_SOURCE_DIR}/.pounce/data/library_path.pounce")
@@ -102,8 +100,7 @@ else()
     message(STATUS "C Flags: (unknown build type)")
 endif()
 message(STATUS "Sources: ${SRC_FILES}")
-message(STATUS "Output: ${OUTPUT_LIB_DIR}/${LIB_NAME}_static.a")
-message(STATUS "Output: ${OUTPUT_LIB_DIR}/${LIB_NAME}_shared${CMAKE_SHARED_LIBRARY_SUFFIX}")
+message(STATUS "Output: ${OUTPUT_LIB_DIR}/lib${LIB_NAME_LOWER}.{a,so}")
 message(STATUS "Library Path File: ${LIBRARY_PATH_FILE}")
 message(STATUS "-----------------------------------------------")
 file(WRITE "${CMAKE_SOURCE_DIR}/.pounce/data/target_type" "library")
