@@ -144,16 +144,16 @@
   ```
   Aliases: -n 
 
-| Option            | Description                                           |
-|------------------|-------------------------------------------------------|
-| `--main`          | Generates a `main.c` with Hello, World in `src` directory |
-| `--pounce.build`  | Generate a default `pounce.build` in current directory |
-| `--cmakelist`     | Generate a default `CMakeLists.txt` in current directory |
-| `--cmakelist-lib` | Generate a default library-style `CMakeLists.txt` in current directory |
-| `--pair`          | Create `src/mymodule.c` and `src/mymodule.h`        |
-| `--pair-inc`      | Create `src/mymodule.c` and `inc/mymodule.h`        |
-| `--pair-cpp`      | Create `src/mymodule.cpp` and `src/mymodule.hpp`    |
-| `--pair-cpp-inc`  | Create `src/mymodule.cpp` and `inc/mymodule.hpp`    |
+	| Option            | Description                                           |
+	|------------------|-------------------------------------------------------|
+	| `--main`          | Generates a `main.c` with Hello, World in `src` directory |
+	| `--pounce.build`  | Generate a default `pounce.build` in current directory |
+	| `--cmakelist`     | Generate a default `CMakeLists.txt` in current directory |
+	| `--cmakelist-lib` | Generate a default library-style `CMakeLists.txt` in current directory |
+	| `--pair`          | Create `src/mymodule.c` and `src/mymodule.h`        |
+	| `--pair-inc`      | Create `src/mymodule.c` and `inc/mymodule.h`        |
+	| `--pair-cpp`      | Create `src/mymodule.cpp` and `src/mymodule.hpp`    |
+	| `--pair-cpp-inc`  | Create `src/mymodule.cpp` and `inc/mymodule.hpp`    |
 
 
  ```bash
